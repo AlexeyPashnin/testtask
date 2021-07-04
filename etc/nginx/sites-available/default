@@ -1,0 +1,35 @@
+server {
+    listen 80;
+    server_name localhost;
+    root /var/www;
+
+    index index.html index.htm index.php;
+
+    location / {
+	proxy_pass http://wordpress.com;
+    }
+
+    location /php5.6/ {
+        root /var/www/php5.6;
+        fastcgi_pass unix:/var/run/php/php5.6-fpm.sock;
+        include         fastcgi_params;
+        fastcgi_param   SCRIPT_FILENAME    /var/www/php5.6/index.php;
+        fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+    }
+
+    location /php7.1/ {
+        root /var/www/php7.1;
+        fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+        include         fastcgi_params;
+        fastcgi_param   SCRIPT_FILENAME    /var/www/php7.1/index.php;
+        fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+    }
+
+    location /php7.3/ {
+        root /var/www/php7.3;
+        fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
+        include         fastcgi_params;
+        fastcgi_param   SCRIPT_FILENAME    /var/www/php7.3/index.php;
+        fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+    }
+}
